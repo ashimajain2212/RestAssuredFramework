@@ -1,5 +1,7 @@
 package com.api.base;
 
+import com.api.models.request.ProfileRequest;
+
 import io.restassured.response.Response;
 
 public class UserProfileManagementService extends BaseService{
@@ -15,11 +17,12 @@ setAuthToken(token);
 
 }
 
-/*
-public Response updateProfile(String token, ProfileRequest payload) {
+
+public Response updateProfile(String token, ProfileRequest payload)
+{
 	setAuthToken(token);
 	return putRequest(payload, BASE_PATH + "/profile");
 
 }
-*/
+
 }

@@ -51,4 +51,14 @@ public class BaseService {
 		return requestSpecification.get(endpoint);
 	}
 	
+	protected Response putRequest(Object payload, String endPoint)
+	{
+		
+		return requestSpecification.contentType(ContentType.JSON).body(payload).put(endPoint);
+
+	}
+	
+	
+	
+	
 }

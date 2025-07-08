@@ -1,0 +1,44 @@
+package com.api.tests;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.api.base.AuthService;
+import com.api.base.UserProfileManagementService;
+import com.api.models.request.LoginRequest;
+import com.api.models.request.ProfileRequest;
+import com.api.models.response.LoginResponse;
+import com.api.models.response.UserProfileResponse;
+
+import io.restassured.response.Response;
+
+public class UpdateProfileTest {
+
+	@Test(description = "verify if password is getting set or not")
+	public void updateProfile() {
+
+		AuthService authService = new AuthService();
+		Response response = authService.login(new LoginRequest("ashimajain", "Dreams#2212"));
+
+		LoginResponse loginResponse = response.as(LoginResponse.class);
+
+		System.out.println(response.asPrettyString());
+		System.out.println("-----------------------------------------------------");
+		
+		
+		UserProfileManagementService userProfileManagementService = new UserProfileManagementService();
+		response = userProfileManagementService.getProfile(loginResponse.getToken());
+	
+		System.out.println(response.asPrettyString());
+
+		UserProfileResponse userProfileResponse = response.as(UserProfileResponse.class);
+		Assert.assertEquals(userProfileResponse.getUsername(), "ashimajain");
+	System.out.println("***********************************************************************************");	
+		ProfileRequest profileRequest = new ProfileRequest.Builder().firstName("shaarav").lastName("jain")
+				.email("sj@gmail.com").mobileNumber("3432434342").build();
+		System.out.println(profileRequest);
+		response = userProfileManagementService.updateProfile(loginResponse.getToken(), profileRequest);
+		System.out.println(response.asPrettyString());
+	}
+
+}
